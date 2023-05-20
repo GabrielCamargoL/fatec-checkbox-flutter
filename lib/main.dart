@@ -90,49 +90,52 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Checkbox'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Quais cores você gosta?',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Quais cores você gosta?',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Column(
+                  children: colors.map((option) {
+                    return CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.leading,
+                      title: Text(option),
+                      value: selectedColors.contains(option),
+                      onChanged: (bool? selected) {
+                        updateColors(option, selected!);
+                      },
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 32),
+                const Text(
+                  'Quais estilos músicais você costuma ouvir?',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Column(
+                  children: musicStyles.map((option) {
+                    return CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.leading,
+                      title: Text(option),
+                      value: selectedMusicStyles.contains(option),
+                      onChanged: (bool? selected) {
+                        updateMusicStyles(option, selected!);
+                      },
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: mostrarSelecoes,
+                  child: const Text('Mostrar Seleções'),
+                ),
+              ],
             ),
-            Column(
-              children: colors.map((option) {
-                return CheckboxListTile(
-                  title: Text(option),
-                  value: selectedColors.contains(option),
-                  onChanged: (bool? selected) {
-                    updateColors(option, selected!);
-                  },
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Quais estilos músicais você costuma ouvir?',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Column(
-              children: musicStyles.map((option) {
-                return CheckboxListTile(
-                  title: Text(option),
-                  value: selectedMusicStyles.contains(option),
-                  onChanged: (bool? selected) {
-                    updateMusicStyles(option, selected!);
-                  },
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: mostrarSelecoes,
-              child: const Text('Mostrar Seleções'),
-            ),
-          ],
-        ),
-      ),
+          )),
     );
   }
 }
